@@ -73,28 +73,30 @@ function callApi(method, url) {
       //  console.log(playlists);
     } else {
       console.log(req.responseText);
-      console.log("WTFFF");
     }
   };
 }
 
 function getAlbums(playlist) {
+  console.log("WHY");
   var playlistTracks = playlist.tracks;
   var playlistAlbums = [];
-  for(let i = 0; i < playlistTracks.length; i++){
+  for (i in playlistTracks) {
+    console.log("YELLOW");
     var rawTrack = playlistTracks[i];
     var trackObject = rawTrack.track;
+    console.log(trackObject);
     var album = trackObject.album;
     var albumName = album.name;
     var albumImages = album.images;
     playlistAlbums[i] = new Album(albumName, albumImages);
     console.log(playlistAlbums[i].toString);
-    }
-    return playlistAlbums;
   }
+  return playlistAlbums;
+}
 
-function albumFiller(albumArray){
-  for(let i= 0; i < albumArray.length; i++){
+function albumFiller(albumArray) {
+  for (let i = 0; i < albumArray.length; i++) {
     console.log("get here?");
     var albumName = albumArray[i].name;
     var albumImages = albumArray[i].images;
@@ -133,4 +135,4 @@ function makeBoxes(playlists) {
       console.log("where");
     });
   }
-  }
+}
