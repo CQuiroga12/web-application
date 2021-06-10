@@ -11,4 +11,8 @@ class Album{
     this.name = name; //string
     this.images = images; //array of (spotifyapi) image objects
   }
+
+  toString(){
+    print(this.name);
+  }
 }

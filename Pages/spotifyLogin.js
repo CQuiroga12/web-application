@@ -80,22 +80,26 @@ function callApi(method, url) {
 
 function getAlbums (playlist) {
   var playlistTracks = playlist.tracks;
-  var albums = [];
+  var playlistAlbums = [];
   for(let i = 0; i < playlistTracks.length; i++){
     var rawTrack = playlistTracks[i];
     var trackObject = rawTrack.track;
     var album = trackObject.album;
-    for(let j = 0; j < playlistTracks.length; j++){
-      currentAlbum = playlistTracks[j].trackObject.album;
-      if(album != currentAlbum){
-        var albumName = album.name;
-        var albumImages = album.images;
-        albums[i] = new Album(albumName, albumImages);
-      }
+    var albumName = album.name;
+    var albumImages = album.images;
+    playlistAlbums[i] = new Album(albumName, albumImages);
+    console.log(playlistAlbums[i].toString);
     }
+    return playlistAlbums;
   }
-  console.log("here");
-  return albums;
+
+function albumFiller(albumArray){
+  for(let i= 0; i < albumArray.length; i++){
+    console.log("get here?");
+    var albumName = albumArray[i].name;
+    var albumImages = albumArray[i].images;
+    albums[i] = new Album(albumName, albumImages);
+  }
 }
 
 function makeBoxes(playlists){
@@ -120,13 +124,8 @@ function makeBoxes(playlists){
     document.body.appendChild(currentButton);
     currentButton.addEventListener('click', event =>{
       var songAlbums = getAlbums(currentPlaylist);
-      for(let j = 0; j < songAlbums.length; j++){
-        var albumName = songAlbums[j].name;
-        var albumImages = songAlbums[j].images;
-        albums[j] = new Album(albumName, albumImages);
-        console.log("albums are filled");
-      }
+      albumFiller(songAlbums);
+      console.log("where");
     });
-
   }
   }
