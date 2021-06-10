@@ -6,7 +6,7 @@ const AUTHORIZE = "https://accounts.spotify.com/authorize";
 
 const playlist_endpoint = "https://api.spotify.com/v1/me/playlists";
 
-var rawPlaylists = [];
+var playlists = [];
 
 function onPageLoad() {
   if (window.location.hash != "") {
@@ -50,7 +50,7 @@ const getToken = (hash) => {
 
 function getPlaylists() {
   callApi("GET", playlist_endpoint);
-  makeBox(rawPlaylists);
+  makeBoxes(playlists);
 }
 
 function callApi(method, url) {
@@ -77,15 +77,20 @@ function callApi(method, url) {
   };
 }
 
-function makeBox(rawPlaylists){
-  playlist
-  for(let i = 0; i < rawPlaylists.length; i++){
-    var playlistName = rawPlaylists[i].name;
+function makeBoxes(playlists){
+  var boxes = [];
+  for(let i = 0; i < playlists.length; i++){
+    var playlistName = playlists[i].name;
     var playlistDescription = playlists[i].description;
     var playlistTracks = playlists[i].tracks;
-    var currentPlaylist = new Playlist(playlistName,playlistDescription,playlistTracks);
     console.log(playlistName);
     console.log(playlistDescription);
-    console.log(playlistTracks);
+    boxes[i] = new Playlist(playlistName,playlistDescription,playlistTracks);
+  }
+  for(let i = 0; i < boxes.length; i++){
+    var currentButton = document.createElement('button');
+    console.log(boxes[i].name);
+    currentButton.innerText = boxes[i].name;
+    document.body.appendChild(currentButton);
   }
 }
