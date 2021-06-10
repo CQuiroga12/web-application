@@ -6,6 +6,8 @@ const AUTHORIZE = "https://accounts.spotify.com/authorize";
 
 const playlist_endpoint = "https://api.spotify.com/v1/me/playlists";
 
+var rawPlaylists = [];
+
 function onPageLoad() {
   if (window.location.hash != "") {
     const { access_token, expires_in, token_type } = getToken(
@@ -48,6 +50,7 @@ const getToken = (hash) => {
 
 function getPlaylists() {
   callApi("GET", playlist_endpoint);
+  makeBox(rawPlaylists);
 }
 
 function callApi(method, url) {
@@ -63,7 +66,10 @@ function callApi(method, url) {
   xhr.onload = () => {
     if (xhr.status == 200) {
       var data = JSON.parse(xhr.responseText);
-      consoreturle.log(data);
+     // consoreturle.log(data);
+      console.log(data);
+      playlists = data.items;
+    //  console.log(playlists);
     } else {
       console.log(xhr.responseText);
       console.log("WTFFF");
@@ -71,3 +77,15 @@ function callApi(method, url) {
   };
 }
 
+function makeBox(rawPlaylists){
+  playlist
+  for(let i = 0; i < rawPlaylists.length; i++){
+    var playlistName = rawPlaylists[i].name;
+    var playlistDescription = playlists[i].description;
+    var playlistTracks = playlists[i].tracks;
+    var currentPlaylist = new Playlist(playlistName,playlistDescription,playlistTracks);
+    console.log(playlistName);
+    console.log(playlistDescription);
+    console.log(playlistTracks);
+  }
+}
