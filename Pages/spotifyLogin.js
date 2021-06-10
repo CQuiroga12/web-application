@@ -90,7 +90,8 @@ function makeBoxes(playlists){
   for(let i = 0; i < boxes.length; i++){
     var currentButton = document.createElement('button');
     console.log(boxes[i].name);
-    currentButton.innerText = boxes[i].name;
+    currentButton.innerText = boxes[i].name + "\n\n" + boxes[i].description;
     document.body.appendChild(currentButton);
   }
-}
+
+  }
