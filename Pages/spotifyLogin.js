@@ -55,31 +55,32 @@ function getPlaylists() {
 }
 
 function callApi(method, url) {
-  let xhr = new XMLHttpRequest();
-  xhr.open(method, url, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.setRequestHeader(
+  let req = new XMLHttpRequest();
+  req.open(method, url, true);
+  req.setRequestHeader("Content-Type", "application/json");
+  req.setRequestHeader(
     "Authorization",
     "Bearer " + localStorage.getItem("accessToken")
   );
-  console.log(xhr);
-  xhr.send(null);
-  xhr.onload = () => {
-    if (xhr.status == 200) {
-      var data = JSON.parse(xhr.responseText);
-     // consoreturle.log(data);
+  console.log(req);
+  req.send(null);
+  req.onload = () => {
+    if (req.status == 200) {
+      var data = JSON.parse(req.responseText);
+      // consoreturle.log(data);
       console.log(data);
       playlists = data.items;
-    //  console.log(playlists);
+      //  console.log(playlists);
     } else {
-      console.log(xhr.responseText);
+      console.log(req.responseText);
       console.log("WTFFF");
     }
   };
 }
 
-function getAlbums (playlist) {
+function getAlbums(playlist) {
   var playlistTracks = playlist.tracks;
+<<<<<<< HEAD
   var playlistAlbums = [];
   for(let i = 0; i < playlistTracks.length; i++){
     var rawTrack = playlistTracks[i];
@@ -89,6 +90,20 @@ function getAlbums (playlist) {
     var albumImages = album.images;
     playlistAlbums[i] = new Album(albumName, albumImages);
     console.log(playlistAlbums[i].toString);
+=======
+  var albums = [];
+  for (let i = 0; i < playlistTracks.length; i++) {
+    var rawTrack = playlistTracks[i];
+    var trackObject = rawTrack.track;
+    var album = trackObject.album;
+    for (let j = 0; j < playlistTracks.length; j++) {
+      currentAlbum = playlistTracks[j].trackObject.album;
+      if (album != currentAlbum) {
+        var albumName = album.name;
+        var albumImages = album.images;
+        albums[i] = new Album(albumName, albumImages);
+      }
+>>>>>>> 476a421f7cdc3ea1bc1e5b9c7b387b949b5f4f3a
     }
     return playlistAlbums;
   }
@@ -102,30 +117,46 @@ function albumFiller(albumArray){
   }
 }
 
-function makeBoxes(playlists){
+function makeBoxes(playlists) {
   var boxes = []; //array of boxes
-  var div = document.createElement('div');
+  var div = document.createElement("div");
   div.className = "parent";
   document.body.appendChild(div); //parent button
-  for(let i = 0; i < playlists.length; i++){
+  for (let i = 0; i < playlists.length; i++) {
     var playlistName = playlists[i].name;
     var playlistDescription = playlists[i].description;
     var playlistTracks = playlists[i].tracks;
     console.log(playlistName);
     console.log(playlistDescription);
-    currentPlaylist = new Playlist(playlistName,playlistDescription,playlistTracks);
-    boxes[i] = new Box(currentPlaylist, "playlist" + " " + i );
+    currentPlaylist = new Playlist(
+      playlistName,
+      playlistDescription,
+      playlistTracks
+    );
+    boxes[i] = new Box(currentPlaylist, "playlist" + " " + i);
   }
-  for(let i = 0; i < boxes.length; i++){
-    var currentButton = document.createElement('button');
+  for (let i = 0; i < boxes.length; i++) {
+    var currentButton = document.createElement("button");
     var currentPlaylist = boxes[i].playlist;
     currentButton.id = boxes[i].id;
-    currentButton.innerText = currentPlaylist.name + "\n\n" + currentPlaylist.description;
+    currentButton.innerText =
+      currentPlaylist.name + "\n\n" + currentPlaylist.description;
     document.body.appendChild(currentButton);
-    currentButton.addEventListener('click', event =>{
+    currentButton.addEventListener("click", (event) => {
       var songAlbums = getAlbums(currentPlaylist);
+<<<<<<< HEAD
       albumFiller(songAlbums);
       console.log("where");
     });
   }
+=======
+      for (let j = 0; j < songAlbums.length; j++) {
+        var albumName = songAlbums[j].name;
+        var albumImages = songAlbums[j].images;
+        albums[j] = new Album(albumName, albumImages);
+        console.log("albums are filled");
+      }
+    });
+>>>>>>> 476a421f7cdc3ea1bc1e5b9c7b387b949b5f4f3a
   }
+}
