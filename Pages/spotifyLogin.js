@@ -7,6 +7,7 @@ const AUTHORIZE = "https://accounts.spotify.com/authorize";
 const playlist_endpoint = "https://api.spotify.com/v1/me/playlists";
 
 var playlists = [];
+var albums = [];
 
 function onPageLoad() {
   if (window.location.hash != "") {
@@ -77,21 +78,55 @@ function callApi(method, url) {
   };
 }
 
+function getAlbums (playlist) {
+  var playlistTracks = playlist.tracks;
+  var albums = [];
+  for(let i = 0; i < playlistTracks.length; i++){
+    var rawTrack = playlistTracks[i];
+    var trackObject = rawTrack.track;
+    var album = trackObject.album;
+    for(let j = 0; j < playlistTracks.length; j++){
+      currentAlbum = playlistTracks[j].trackObject.album;
+      if(album != currentAlbum){
+        var albumName = album.name;
+        var albumImages = album.images;
+        albums[i] = new Album(albumName, albumImages);
+      }
+    }
+  }
+  console.log("here");
+  return albums;
+}
+
 function makeBoxes(playlists){
-  var boxes = [];
+  var boxes = []; //array of boxes
+  var div = document.createElement('div');
+  div.className = "parent";
+  document.body.appendChild(div); //parent button
   for(let i = 0; i < playlists.length; i++){
     var playlistName = playlists[i].name;
     var playlistDescription = playlists[i].description;
     var playlistTracks = playlists[i].tracks;
     console.log(playlistName);
     console.log(playlistDescription);
-    boxes[i] = new Playlist(playlistName,playlistDescription,playlistTracks);
+    currentPlaylist = new Playlist(playlistName,playlistDescription,playlistTracks);
+    boxes[i] = new Box(currentPlaylist, "playlist" + " " + i );
   }
   for(let i = 0; i < boxes.length; i++){
     var currentButton = document.createElement('button');
-    console.log(boxes[i].name);
-    currentButton.innerText = boxes[i].name + "\n\n" + boxes[i].description;
+    var currentPlaylist = boxes[i].playlist;
+    currentButton.id = boxes[i].id;
+    currentButton.innerText = currentPlaylist.name + "\n\n" + currentPlaylist.description;
     document.body.appendChild(currentButton);
-  }
+    currentButton.addEventListener('click', event =>{
+      var songAlbums = getAlbums(currentPlaylist);
+      for(let j = 0; j < songAlbums.length; j++){
+        var albumName = songAlbums[j].name;
+        var albumImages = songAlbums[j].images;
+        albums[j] = new Album(albumName, albumImages);
+        console.log("albums are filled");
+      }
+    });
 
+  }
   }
