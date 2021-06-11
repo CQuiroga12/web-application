@@ -73,28 +73,58 @@ function callApi(method, url) {
       //  console.log(playlists);
     } else {
       console.log(req.responseText);
-      console.log("WTFFF");
     }
   };
 }
 
+// async function getPlaylistTrack(method, url, playlist) {
+//   var playlistTracksResponce = await fetch(playlist[0].tracks.href);
+//   console.log("GREEEN");
+//   console.log(playlistTracksResponce);
+//   var playlistTracks = await playlistTracksResponce.type;
+//   console.log("BROWN");
+//   console.log(playlistTracks);
+// }
+
+// function callPlaylistTrackApi(method, url) {
+//   let req = new XMLHttpRequest();
+//   req.open(method, url, true);
+//   req.setRequestHeader("Content-Type", "application/json");
+//   req.setRequestHeader(
+//     "Authorization",
+//     "Bearer " + localStorage.getItem("accessToken")
+//   );
+//   console.log(req);
+//   req.send(null);
+//   req.onload = () => {
+//     if (req.status == 200) {
+//       console.log("PURPLE");
+//       console.log(req.response.added_at);
+//     }
+//   };
+// }
+
 function getAlbums(playlist) {
-  var playlistTracks = playlist.tracks;
+  console.log("WHY");
+  console.log(playlist.type);
   var playlistAlbums = [];
-  for(let i = 0; i < playlistTracks.length; i++){
+  for (i in playlistTracks) {
+    console.log("YELLOW");
     var rawTrack = playlistTracks[i];
+    console.log(rawTrack);
     var trackObject = rawTrack.track;
+    console.log(trackObject + "BLUE");
     var album = trackObject.album;
     var albumName = album.name;
     var albumImages = album.images;
     playlistAlbums[i] = new Album(albumName, albumImages);
     console.log(playlistAlbums[i].toString);
-    }
-    return playlistAlbums;
   }
+  return playlistAlbums;
+}
 
-function albumFiller(albumArray){
-  for(let i= 0; i < albumArray.length; i++){
+function albumFiller(albumArray) {
+  for (let i = 0; i < albumArray.length; i++) {
     console.log("get here?");
     var albumName = albumArray[i].name;
     var albumImages = albumArray[i].images;
@@ -139,4 +169,4 @@ function makeBoxes(playlists) {
 
     });
   }
-  }
+}
