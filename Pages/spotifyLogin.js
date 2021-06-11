@@ -77,15 +77,43 @@ function callApi(method, url) {
   };
 }
 
+// async function getPlaylistTrack(method, url, playlist) {
+//   var playlistTracksResponce = await fetch(playlist[0].tracks.href);
+//   console.log("GREEEN");
+//   console.log(playlistTracksResponce);
+//   var playlistTracks = await playlistTracksResponce.type;
+//   console.log("BROWN");
+//   console.log(playlistTracks);
+// }
+
+// function callPlaylistTrackApi(method, url) {
+//   let req = new XMLHttpRequest();
+//   req.open(method, url, true);
+//   req.setRequestHeader("Content-Type", "application/json");
+//   req.setRequestHeader(
+//     "Authorization",
+//     "Bearer " + localStorage.getItem("accessToken")
+//   );
+//   console.log(req);
+//   req.send(null);
+//   req.onload = () => {
+//     if (req.status == 200) {
+//       console.log("PURPLE");
+//       console.log(req.response.added_at);
+//     }
+//   };
+// }
+
 function getAlbums(playlist) {
   console.log("WHY");
-  var playlistTracks = playlist.tracks;
+  console.log(playlist.type);
   var playlistAlbums = [];
   for (i in playlistTracks) {
     console.log("YELLOW");
     var rawTrack = playlistTracks[i];
+    console.log(rawTrack);
     var trackObject = rawTrack.track;
-    console.log(trackObject);
+    console.log(trackObject + "BLUE");
     var album = trackObject.album;
     var albumName = album.name;
     var albumImages = album.images;
