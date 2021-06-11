@@ -7,10 +7,11 @@
  */
 class Playlist{
 
-  constructor(name,description, tracks){
+  constructor(name,description, tracks, images){
     this.name = name;
     this.description = description;
     this.tracks = tracks;
+    this.images = images;
   }
 
 }

@@ -107,12 +107,16 @@ function makeBoxes(playlists) {
   var div = document.createElement("div");
   div.className = "parent";
   document.body.appendChild(div); //parent button
+  var images = [];
   for (let i = 0; i < playlists.length; i++) {
     var playlistName = playlists[i].name;
     var playlistDescription = playlists[i].description;
     var playlistTracks = playlists[i].tracks;
+    var playlistImages = playlists[i].images
+    images[i]=playlistImages[0].url;
     console.log(playlistName);
     console.log(playlistDescription);
+    console.table(images);
     currentPlaylist = new Playlist(
       playlistName,
       playlistDescription,
@@ -128,9 +132,11 @@ function makeBoxes(playlists) {
       currentPlaylist.name + "\n\n" + currentPlaylist.description;
     document.body.appendChild(currentButton);
     currentButton.addEventListener("click", (event) => {
-      var songAlbums = getAlbums(currentPlaylist);
-      albumFiller(songAlbums);
-      console.log("where");
+      var image = images[i];
+      var img = document.createElement("img");
+      img.src = image;
+      document.body.appendChild(img);
+
     });
   }
   }
