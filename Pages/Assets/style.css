@@ -1,11 +1,18 @@
+body{
+  max-width: 75%;
+  max-height: auto;
+  display: block;
+  box-sizing: border-box;
+
+}
+
+
 h1 {
   color: green;
 }
 
 .container{
-  background-color:red;
-}
-.button {
-  font-size: 36px;
-  background-color: blue;
+  text-align: center;
+  margin:auto;
+  width: 50%;
 }
