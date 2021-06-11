@@ -1,4 +1,4 @@
-const redirect_uri = "http://127.0.0.1:5500/Pages/index.html";
+const redirect_uri = "http://playlist-map.surge.sh/";
 
 const client_id = "d0992046a3e246b09e04a0086bbd2e27";
 
@@ -81,7 +81,7 @@ function callApi(method, url) {
 function getAlbums(playlist) {
   var playlistTracks = playlist.tracks;
   var playlistAlbums = [];
-  for(let i = 0; i < playlistTracks.length; i++){
+  for (let i = 0; i < playlistTracks.length; i++) {
     var rawTrack = playlistTracks[i];
     var trackObject = rawTrack.track;
     var album = trackObject.album;
@@ -89,12 +89,12 @@ function getAlbums(playlist) {
     var albumImages = album.images;
     playlistAlbums[i] = new Album(albumName, albumImages);
     console.log(playlistAlbums[i].toString);
-    }
-    return playlistAlbums;
   }
+  return playlistAlbums;
+}
 
-function albumFiller(albumArray){
-  for(let i= 0; i < albumArray.length; i++){
+function albumFiller(albumArray) {
+  for (let i = 0; i < albumArray.length; i++) {
     console.log("get here?");
     var albumName = albumArray[i].name;
     var albumImages = albumArray[i].images;
@@ -108,15 +108,21 @@ function makeBoxes(playlists) {
   div.className = "parent";
   document.body.appendChild(div); //parent button
   var images = [];
-  for (let i = 0; i < playlists.length; i++) {
+  console.log("START OF FOR LOOP");
+  for (i = 0; i < playlists.length; i++) {
+    console.log("Iteration");
     var playlistName = playlists[i].name;
     var playlistDescription = playlists[i].description;
     var playlistTracks = playlists[i].tracks;
-    var playlistImages = playlists[i].images
-    images[i]=playlistImages[0].url;
-    console.log(playlistName);
-    console.log(playlistDescription);
-    console.table(images);
+    try {
+      var playlistImages = playlists[i].images[0].url;
+      console.log("Name: " + playlistName);
+      console.log("Description: " + playlistDescription);
+      console.log(playlistImages);
+      console.log("playListIMAGE^");
+      images[i] = playlistImages;
+      console.log("Image: " + images[i]);
+    } catch (TypeError) {}
     currentPlaylist = new Playlist(
       playlistName,
       playlistDescription,
@@ -132,11 +138,12 @@ function makeBoxes(playlists) {
       currentPlaylist.name + "\n\n" + currentPlaylist.description;
     document.body.appendChild(currentButton);
     currentButton.addEventListener("click", (event) => {
-      var image = images[i];
-      var img = document.createElement("img");
-      img.src = image;
-      document.body.appendChild(img);
+      if (images[i]) {
+        var image = images[i];
+        var img = document.createElement("img");
+        img.src = image;
+        document.body.appendChild(img);
+      }
     });
   }
-
-  }
+}
